@@ -12,6 +12,7 @@ function App() {
   ]);
   const [streamingMsg, setStreamingMsg] = useState("");
   const [chatActive, setChatActive] = useState(false);
+  const [streamingWords, setStreamingWords] = useState([]);
   const username = "User"; // Replace with auth logic if needed
 
   const initialMessages = [
@@ -22,6 +23,13 @@ function App() {
     setMessages(initialMessages);
     setStreamingWords([]);
     setChatActive(false);
+  };
+
+  const handleGoHome = () => {
+    setChatActive(false);
+    setMessages(initialMessages);
+    setStreamingWords([]);
+    setStreamingMsg("");
   };
 
   // Feedback handler (can be expanded to store feedback)
@@ -73,8 +81,6 @@ function App() {
     setTimeout(streamNextWord, 420); // Simulate thinking delay
   };
 
-  const [streamingWords, setStreamingWords] = useState([]);
-
   return (
     <ThemeProvider>
       <ThemeContext.Consumer>
@@ -89,9 +95,17 @@ function App() {
               </div>
             ) : (
               <>
-                <Header username={username} onNewSession={handleNewSession} />
+                <Header 
+                  username={username} 
+                  onNewSession={handleNewSession} 
+                  onGoHome={handleGoHome}
+                />
                 <div className="chat-main">
-                  <ChatWindow messages={messages} streamingWords={streamingWords} onFeedback={handleFeedback} />
+                  <ChatWindow 
+                    messages={messages} 
+                    streamingWords={streamingWords} 
+                    onFeedback={handleFeedback} 
+                  />
                   <MessageInput onSendMessage={handleSendMessage} />
                 </div>
               </>

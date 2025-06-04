@@ -26,6 +26,20 @@ function Header({ username, onNewSession, onGoHome }) {
     }
   };
 
+  const handleNewSession = () => {
+    if (onNewSession) {
+      onNewSession();
+    }
+    setDropdownOpen(false);
+  };
+
+  const handleGoToHome = () => {
+    if (onGoHome) {
+      onGoHome();
+    }
+    setDropdownOpen(false);
+  };
+
   return (
     <nav className="header-navbar">
       <div className="header-brand" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
@@ -33,19 +47,26 @@ function Header({ username, onNewSession, onGoHome }) {
         <span className="brand-text">AI-DN</span>
       </div>
       <div className="header-actions">
+        <button onClick={handleNewSession} className="new-session-btn" title="Start new chat session">
+          <span>+ New Chat</span>
+        </button>
         <div className="user-menu-container" ref={dropdownRef}>
           <span className="greeting d-none d-md-inline" onClick={() => setDropdownOpen(!isDropdownOpen)} style={{ cursor: 'pointer' }}>
             Hello, {username} <span className={`dropdown-arrow ${isDropdownOpen ? 'open' : ''}`}>▼</span>
           </span>
           {isDropdownOpen && (
             <div className="dropdown-menu">
-              <button className="dropdown-item new-session-btn-dropdown" onClick={() => { onNewSession(); setDropdownOpen(false); }}>
+              <button className="dropdown-item" onClick={handleNewSession}>
                 <span className="dropdown-icon">💬</span>
                 New Chat Session
               </button>
-              <button className="dropdown-item home-btn-dropdown" onClick={() => { handleLogoClick(); setDropdownOpen(false); }}>
+              <button className="dropdown-item" onClick={handleGoToHome}>
                 <span className="dropdown-icon">🏠</span>
                 Go to Home
+              </button>
+              <button className="dropdown-item" onClick={() => { toggleTheme(); setDropdownOpen(false); }}>
+                <span className="dropdown-icon">{theme === "dark" ? "🌙" : "☀️"}</span>
+                {theme === "dark" ? "Light Mode" : "Dark Mode"}
               </button>
             </div>
           )}
