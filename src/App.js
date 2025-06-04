@@ -13,7 +13,7 @@ function App() {
   const [streamingMsg, setStreamingMsg] = useState("");
   const [chatActive, setChatActive] = useState(false);
   const [streamingWords, setStreamingWords] = useState([]);
-  const username = "User"; // Replace with auth logic if needed
+  const username = "DN"; // Replace with auth logic if needed
 
   const initialMessages = [
     { id: 1, text: "Hello! How can I help you today?", sender: "bot", timestamp: Date.now() },
@@ -85,32 +85,34 @@ function App() {
     <ThemeProvider>
       <ThemeContext.Consumer>
         {({ theme }) => (
-          <div className={`app-container ${theme} ${!chatActive ? 'layout-landing' : 'layout-chat'}`}>
-            {!chatActive ? (
-              <div className="landing-layout">
-                <LandingPage showWelcomeMessage={!chatActive} />
-                <div className="landing-input-container">
-                  <MessageInput onSendMessage={handleSendMessage} />
+          <div className="background-fade-container">
+            <div className={`app-container ${theme} ${!chatActive ? 'layout-landing' : 'layout-chat'}`}>
+              {!chatActive ? (
+                <div className="landing-layout">
+                  <LandingPage showWelcomeMessage={!chatActive} />
+                  <div className="landing-input-container">
+                    <MessageInput onSendMessage={handleSendMessage} />
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <>
-                <Header 
-                  username={username} 
-                  onNewSession={handleNewSession} 
-                  onGoHome={handleGoHome}
-                />
-                <div className="chat-main">
-                  <ChatWindow 
-                    messages={messages} 
-                    streamingWords={streamingWords} 
-                    onFeedback={handleFeedback} 
+              ) : (
+                <>
+                  <Header 
+                    username={username} 
+                    onNewSession={handleNewSession} 
+                    onGoHome={handleGoHome}
                   />
-                  <MessageInput onSendMessage={handleSendMessage} />
-                </div>
-              </>
-            )}
-          </div>
+                  <div className="chat-main">
+                    <ChatWindow 
+                      messages={messages} 
+                      streamingWords={streamingWords} 
+                      onFeedback={handleFeedback} 
+                    />
+                    <MessageInput onSendMessage={handleSendMessage} />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>  
         )}
       </ThemeContext.Consumer>
     </ThemeProvider>

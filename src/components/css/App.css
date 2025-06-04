@@ -94,3 +94,34 @@ body.dark .landing-input-container .message-input-bar {
     margin-top: 2rem;
   }
 }
+
+.background-fade-container {
+  animation: background-fade 1.2s ease-out forwards;
+  background: linear-gradient(to bottom, #0d1117 0%, #161b22 50%, #21262d 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes background-fade {
+  from {
+    opacity: 0;
+    background: linear-gradient(to bottom, #000000, #000000, #000000);
+  }
+  to {
+    opacity: 1;
+    background: linear-gradient(to bottom, #0d1117 0%, #161b22 50%, #21262d 100%);
+  }
+}
+
+/* Optional: Make chat transparent so background shows through */
+.chat-main,
+.landing-layout {
+  background: transparent;
+}
+
+/* Optional: Header transparent too */
+.header {
+  background: transparent;
+  color: #f1f1f1;
+}

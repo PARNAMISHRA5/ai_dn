@@ -19,7 +19,7 @@ function LandingPage({ showWelcomeMessage }) {
       </div>
       <div className="landing-content">
         <div className="landing-logo">🚀</div>
-        <h1 className="landing-brand">Aidn</h1>
+        <h1 className="landing-brand">Ai-DN</h1>
         {showWelcomeMessage && <p className="landing-welcome-docs">Welcome to TM documentation</p>}
         <p className="landing-welcome">Ask me anything to get started!</p>
       </div>
