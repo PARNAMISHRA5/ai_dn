@@ -1,0 +1,175 @@
+/* === Layout & Container === */
+.landing-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: transparent;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  color: #23232a;
+  transition: color 0.3s, background-color 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+body.dark .landing-page-container {
+  color: #f0f0f0;
+}
+
+/* === Theme Toggle Button === */
+/* === Theme Toggle Button === */
+.landing-theme-toggle {
+  position: fixed; /* ← fixed to the entire page */
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000; /* make sure it's above everything */
+}
+
+
+.landing-theme-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid #e0e0e0;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #333;
+  outline: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.landing-theme-btn:hover {
+  transform: scale(1.1);
+  background: rgba(229, 46, 113, 0.1);
+  border-color: #e52e71;
+  box-shadow: 0 6px 20px rgba(229, 46, 113, 0.2);
+}
+
+body.dark .landing-theme-btn {
+  background: rgba(30, 30, 30, 0.9);
+  border-color: #555;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .landing-theme-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* === Content === */
+.landing-content {
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.landing-logo {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  color: #e52e71;
+  filter: drop-shadow(0 4px 12px rgba(229, 46, 113, 0.2));
+}
+
+body.dark .landing-logo {
+  color: #fff;
+  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.1));
+}
+
+.landing-brand {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #e52e71, #1a237e, #8e24aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+body.dark .landing-brand {
+  background: linear-gradient(135deg, #e52e71, #6366f1, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.landing-welcome-docs {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #666;
+  opacity: 0.9;
+}
+
+body.dark .landing-welcome-docs {
+  color: #aaa;
+}
+
+.landing-welcome {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 0;
+  color: #555;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+body.dark .landing-welcome {
+  color: #ccc;
+}
+
+/* === Responsive Styling === */
+@media (max-width: 768px) {
+  .landing-theme-toggle {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .landing-theme-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+  }
+
+  .landing-logo {
+    font-size: 3rem;
+  }
+
+  .landing-brand {
+    font-size: 2.5rem;
+  }
+
+  .landing-welcome {
+    font-size: 1.1rem;
+  }
+
+  .landing-welcome-docs {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-logo {
+    font-size: 2.5rem;
+  }
+
+  .landing-brand {
+    font-size: 2rem;
+  }
+
+  .landing-welcome {
+    font-size: 1rem;
+  }
+
+  .landing-welcome-docs {
+    font-size: 0.9rem;
+  }
+}

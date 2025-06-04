@@ -1,0 +1,282 @@
+/* --- Minimal, Professional Header --- */
+.header-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem; /* Reduced padding for a tighter look */
+  background: transparent; /* Transparent background */
+  /* border-bottom: 1.5px solid #e0e0e0; */ /* Removed for full blend */
+  color: #23232a; /* Default text color for light mode */
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+body.dark .header-navbar {
+  /* border-bottom: 1.5px solid #383848; */ /* Removed for full blend */
+  color: #f0f0f0; /* Default text color for dark mode */
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: transform 0.2s ease;
+}
+
+.header-brand:hover {
+  transform: scale(1.02);
+}
+
+.logo-circle {
+  width: 38px; /* Slightly smaller */
+  height: 38px;
+  background: none; /* No background fill */
+  border: 1.5px solid #e52e71; /* Border color */
+  border-radius: 50%; /* Circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem; /* Adjusted icon size */
+  color: #e52e71; /* Icon color */
+  transition: border-color 0.3s, color 0.3s;
+}
+
+body.dark .logo-circle {
+  border-color: #fff;
+  color: #fff;
+}
+
+.brand-text {
+  font-weight: 700; /* Bold */
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  color: inherit; /* Inherit from .header-navbar */
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem; /* Reduced gap */
+}
+
+.user-menu-container {
+  position: relative;
+}
+
+.greeting {
+  font-size: 0.9rem;
+  color: inherit; /* Inherit from .header-navbar */
+  margin: 0 0.5rem;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.greeting:hover {
+  background-color: rgba(229, 46, 113, 0.1);
+}
+
+body.dark .greeting:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-arrow {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  /* backdrop-filter: blur(10px); */
+  border: 1px solid rgba(224, 224, 224, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  min-width: 180px;
+  z-index: 1000;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+body.dark .dropdown-menu {
+  background: rgba(30, 30, 30, 0.95);
+  border-color: rgba(56, 56, 72, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(229, 46, 113, 0.1);
+  color: #e52e71;
+}
+
+body.dark .dropdown-item {
+  color: #f0f0f0;
+}
+
+body.dark .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.dropdown-icon {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.new-session-btn {
+  background: none;
+  color: #e52e71;
+  border: 1.5px solid #e52e71;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.18s;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+}
+
+.new-session-btn:hover {
+  background: rgba(229, 46, 113, 0.07);
+  color: #e52e71;
+  transform: scale(1.03);
+}
+
+body.dark .new-session-btn {
+  color: #fff;
+  border-color: #fff;
+}
+
+body.dark .new-session-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.theme-toggle-btn {
+  background: none;
+  border: 1.5px solid #23232a;
+  font-size: 1.2rem; /* Adjusted icon size */
+  cursor: pointer;
+  color: #23232a;
+  outline: none;
+  border-radius: 50%;
+  width: 36px; /* Adjusted size */
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s, background 0.18s, color 0.18s, border-color 0.18s;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  background: rgba(35, 35, 42, 0.05);
+}
+
+body.dark .theme-toggle-btn {
+  border-color: #fff;
+  color: #fff;
+}
+
+body.dark .theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header-navbar {
+    padding: 0 1rem;
+    height: 60px;
+  }
+  .brand-text {
+    font-size: 1.2rem;
+  }
+  .logo-circle {
+    width: 34px;
+    height: 34px;
+    font-size: 1.3rem;
+  }
+  .new-session-btn {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  .header-actions {
+    gap: 0.5rem;
+  }
+  .theme-toggle-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+  .greeting.d-md-inline {
+    display: none !important; /* Ensure greeting is hidden on smaller screens if Bootstrap class is used */
+  }
+  .dropdown-menu {
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-text {
+    display: none; /* Hide brand text on very small screens, logo is enough */
+  }
+  .greeting {
+    display: none !important;
+  }
+   .new-session-btn span {
+    display: none; /* Show only + icon */
+  }
+  .new-session-btn {
+    padding: 0.4rem;
+    width: 34px; /* Make it square for icon */
+    height: 34px;
+    font-size: 1.2rem; /* Adjust icon size if needed */
+  }
+  .new-session-btn::before {
+    content: '+'; /* Ensure plus is visible */
+    font-weight: 600;
+  }
+}
