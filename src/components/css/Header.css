@@ -63,11 +63,18 @@ body.dark .logo-circle {
   align-items: center;
   gap: 1rem; /* Increased gap to accommodate new button */
 }
-
+.logo-icon {
+  width: 30px;   /* small icon size */
+  height: 30px;
+  object-fit: contain;
+  display: block;
+}
 .user-menu-container {
   position: relative;
 }
-
+.landing-logo-header{
+  width: 1px;
+}
 .greeting {
   font-size: 0.9rem;
   color: inherit; /* Inherit from .header-navbar */

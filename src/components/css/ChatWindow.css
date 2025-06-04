@@ -38,7 +38,7 @@
 
 /* Dark mode styling */
 body.dark .chat-bubble {
-  background: rgba(30,34,90,0.92);
+  background: #333;
   color: #f8f9fa;
 }
 
@@ -92,7 +92,7 @@ body.dark .chat-bubble {
 }
 
 body.dark .bubble-meta {
-  color: var(--text-dark-muted);
+  color: #717172;
 }
 
 .bubble-timestamp {

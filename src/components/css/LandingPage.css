@@ -25,6 +25,12 @@ body.dark .landing-page-container {
   right: 1rem;
   z-index: 1000; /* make sure it's above everything */
 }
+.landing-logo img {
+  width: 120px; /* or whatever size fits */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
 
 
 .landing-theme-btn {

@@ -13,7 +13,7 @@ function App() {
   const [streamingMsg, setStreamingMsg] = useState("");
   const [chatActive, setChatActive] = useState(false);
   const [streamingWords, setStreamingWords] = useState([]);
-  const username = "DN"; // Replace with auth logic if needed
+  const username = "DNM"; // Replace with auth logic if needed
 
   const initialMessages = [
     { id: 1, text: "Hello! How can I help you today?", sender: "bot", timestamp: Date.now() },

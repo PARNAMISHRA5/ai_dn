@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { ThemeContext } from "../../themeContext";
 import "../css/Header.css";
+import logo from '../../assets/image.png'
 
 function Header({ username, onNewSession, onGoHome }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -43,9 +44,10 @@ function Header({ username, onNewSession, onGoHome }) {
   return (
     <nav className="header-navbar">
       <div className="header-brand" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
-        <span className="logo-circle">🤖</span>
+        <img src={logo} alt="Logo" className="logo-icon" />
         <span className="brand-text">AI-DN</span>
       </div>
+
       <div className="header-actions">
         <button onClick={handleNewSession} className="new-session-btn" title="Start new chat session">
           <span>+ New Chat</span>

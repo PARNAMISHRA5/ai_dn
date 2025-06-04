@@ -31,7 +31,7 @@ function MessageInput({ onSendMessage }) {
       <div className="message-input-bar">
         <textarea
           className="message-input"
-          placeholder="Type your message… (Shift+Enter for new line)"
+          placeholder="Type your message… "
           value={input}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
@@ -45,9 +45,9 @@ function MessageInput({ onSendMessage }) {
         />
         <div className="version-dropdown-container">
           <select className="version-select" defaultValue="4.1">
-            <option value="4.1">Claude 4.1</option>
-            <option value="4.2">Claude 4.2</option>
-            <option value="4.3">Claude 4.3</option>
+            <option value="4.1">version 4.1</option>
+            <option value="4.2">version 4.2</option>
+            <option value="4.3">version 4.3</option>
           </select>
           <div className="version-dropdown-icon">▼</div>
         </div>
