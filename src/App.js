@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ThemeProvider, ThemeContext } from "./themeContext";
 import Header from "./components/js/Header";
 import ChatWindow from "./components/js/ChatWindow";
@@ -7,26 +7,53 @@ import LandingPage from "./components/js/LandingPage";
 import "./components/css/App.css";
 // import ThreeJSBackground from "../src/components/js/Three";
 
+
 function App() {
-  const [messages, setMessages] = useState([
-    { id: 1, text: "Hello! How can I help you today?", sender: "bot", timestamp: Date.now() },
-  ]);
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem("chatMessages");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [chatActive, setChatActive] = useState(() => {
+    const saved = localStorage.getItem("chatActive");
+    return saved === "true";
+  });
+
   const [streamingMsg, setStreamingMsg] = useState("");
-  const [chatActive, setChatActive] = useState(false);
   const [streamingWords, setStreamingWords] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const username = "DN"; 
 
-  const initialMessages = [
-    { id: 1, text: "Hello! How can I help you today?", sender: "bot", timestamp: Date.now() },
-  ];
+  const username = "DN";
+  const initialMessages = [];
+
+
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
+
+  useEffect(() => {
+    localStorage.setItem("chatActive", chatActive.toString());
+  }, [chatActive]);
 
   const handleNewSession = () => {
-    setMessages(initialMessages);
-    setStreamingWords([]);
-    setChatActive(false);
-    setIsLoading(false);
+    const greetingMsg = {
+      id: Date.now(),
+      text: "Hello, how can I help?",
+      sender: "bot",
+      timestamp: Date.now(),
+    };
+
+    setMessages([greetingMsg]);      
+    setStreamingWords([]);          
+    setStreamingMsg("");            
+    setChatActive(true);         
+    setIsLoading(false);           
+
+    localStorage.setItem("chatMessages", JSON.stringify([greetingMsg]));
+    localStorage.setItem("chatActive", "true");
   };
+
+
 
   const handleGoHome = () => {
     setChatActive(false);
@@ -34,15 +61,14 @@ function App() {
     setStreamingWords([]);
     setStreamingMsg("");
     setIsLoading(false);
+    localStorage.removeItem("chatMessages");
+    localStorage.removeItem("chatActive");
   };
 
-  // Feedback handler (can be expanded to store feedback)
   const handleFeedback = (msgId, feedback) => {
-    // For demo: just log it. In production, send to backend.
     console.log(`Feedback for message ${msgId}:`, feedback);
   };
 
-  // Mock responses for different types of queries
   const generateMockResponse = (userText) => {
     const responses = [
       "Thank you for your question about " + userText.toLowerCase() + ". Let me provide you with a comprehensive answer.",
@@ -57,7 +83,7 @@ function App() {
   const handleSendMessage = (text) => {
     if (!chatActive) setChatActive(true);
     if (!text.trim()) return;
-    
+
     const now = Date.now();
     const userMsg = {
       id: now,
@@ -67,31 +93,27 @@ function App() {
     };
     setMessages((prev) => [...prev, userMsg]);
 
-    // Start loading state
     setIsLoading(true);
-    
-    // Simulate API thinking time (1-3 seconds like real AI)
+
     const thinkingTime = 1200 + Math.random() * 1800;
-    
+
     setTimeout(() => {
       setIsLoading(false);
-      
-      // Generate a more realistic response
+
       const botText = generateMockResponse(text);
-      const words = botText.split(/(\s+)/); // keep spaces for natural flow
+      const words = botText.split(/(\s+)/);
       let idx = 0;
+
       setStreamingMsg("");
       setStreamingWords([]);
-      
+
       const streamNextWord = () => {
         if (idx < words.length) {
           setStreamingWords((prev) => [...prev, words[idx]]);
           idx++;
-          // Variable timing for more natural feel (40-120ms per word)
           const wordDelay = 40 + Math.random() * 80;
           setTimeout(streamNextWord, wordDelay);
         } else {
-          // When done, add to messages and clear streaming
           const botNow = Date.now();
           setMessages((prev) => [
             ...prev,
@@ -106,8 +128,7 @@ function App() {
           setStreamingWords([]);
         }
       };
-      
-      // Start streaming immediately after loading
+
       streamNextWord();
     }, thinkingTime);
   };
@@ -144,7 +165,7 @@ function App() {
                 </>
               )}
             </div>
-          </div>  
+          </div>
         )}
       </ThemeContext.Consumer>
     </ThemeProvider>

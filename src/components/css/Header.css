@@ -7,17 +7,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem; /* Reduced padding for a tighter look */
-  background: transparent; /* Transparent background */
-  /* border-bottom: 1.5px solid #e0e0e0; */ /* Removed for full blend */
-  color: #23232a; /* Default text color for light mode */
+  padding: 0 1.5rem; 
+  background: transparent; 
+
+  color: #23232a;
   font-family: 'Montserrat', Helvetica, Arial, sans-serif;
   transition: border-color 0.3s, color 0.3s;
 }
 
 body.dark .header-navbar {
-  /* border-bottom: 1.5px solid #383848; */ /* Removed for full blend */
-  color: #f0f0f0; /* Default text color for dark mode */
+ 
+  color: #f0f0f0;
 }
 
 .header-brand {
@@ -32,17 +32,18 @@ body.dark .header-navbar {
 }
 
 .logo-circle {
-  width: 38px; /* Slightly smaller */
+  width: 38px; 
   height: 38px;
-  background: none; /* No background fill */
-  border: 1.5px solid #e52e71; /* Border color */
-  border-radius: 50%; /* Circular */
+  background: none; 
+  border: 1.5px solid #e52e71; 
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem; /* Adjusted icon size */
-  color: #e52e71; /* Icon color */
+  font-size: 1.5rem; 
+  color: #e52e71;
   transition: border-color 0.3s, color 0.3s;
+  cursor: pointer;
 }
 
 body.dark .logo-circle {
@@ -51,20 +52,23 @@ body.dark .logo-circle {
 }
 
 .brand-text {
-  font-weight: 700; /* Bold */
+  font-weight: 700; 
   font-size: 1.4rem;
   letter-spacing: 1px;
-  color: inherit; /* Inherit from .header-navbar */
+  color: inherit;
   font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  cursor: pointer;
 }
+
+
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Increased gap to accommodate new button */
+  gap: 1rem;
 }
 .logo-icon {
-  width: 30px;   /* small icon size */
+  width: 30px;  
   height: 30px;
   object-fit: contain;
   display: block;
@@ -77,12 +81,13 @@ body.dark .logo-circle {
 }
 .greeting {
   font-size: 0.9rem;
-  color: inherit; /* Inherit from .header-navbar */
+  color: inherit; 
   margin: 0 0.5rem;
   font-family: 'Montserrat', Helvetica, Arial, sans-serif;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 
 .greeting:hover {
@@ -98,6 +103,7 @@ body.dark .greeting:hover {
   margin-left: 0.5rem;
   font-size: 0.7rem;
   transition: transform 0.2s ease;
+  cursor: pointer;
 }
 
 .dropdown-arrow.open {
@@ -109,15 +115,15 @@ body.dark .greeting:hover {
   top: 100%;
   right: 0;
   background: rgba(255, 255, 255, 0.95);
-  /* backdrop-filter: blur(10px); */
   border: 1px solid rgba(224, 224, 224, 0.5);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   min-width: 180px;
-  z-index: 1000;
+  z-index: 5000;
   padding: 0.5rem 0;
   margin-top: 0.5rem;
   animation: dropdownFadeIn 0.2s ease-out;
+  cursor: pointer;
 }
 
 body.dark .dropdown-menu {
@@ -177,7 +183,7 @@ body.dark .dropdown-item:hover {
   background: none;
   color: #e52e71;
   border: 1.5px solid #e52e71;
-  border-radius: 50px; /* Pill shape */
+  border-radius: 50px; 
   font-weight: 600;
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
@@ -206,12 +212,12 @@ body.dark .new-session-btn:hover {
 .theme-toggle-btn {
   background: none;
   border: 1.5px solid #23232a;
-  font-size: 1.2rem; /* Adjusted icon size */
+  font-size: 1.2rem; 
   cursor: pointer;
   color: #23232a;
   outline: none;
   border-radius: 50%;
-  width: 36px; /* Adjusted size */
+  width: 36px;
   height: 36px;
   display: flex;
   align-items: center;

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from '../../themeContext';
 import '../css/LandingPage.css';
 import logo from '../../assets/image.png'
+import dnwhite from '../../assets/dn-white-logo.svg';
 
 function LandingPage({ showWelcomeMessage }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
