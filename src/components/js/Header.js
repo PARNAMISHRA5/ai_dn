@@ -3,6 +3,7 @@ import { ThemeContext } from "../../themeContext";
 import "../css/Header.css";
 import logo from "../../assets/image.png";
 
+
 function Header({ username, onNewSession, onGoHome }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -95,5 +96,6 @@ function Header({ username, onNewSession, onGoHome }) {
     </nav>
   );
 }
+
 
 export default Header;
