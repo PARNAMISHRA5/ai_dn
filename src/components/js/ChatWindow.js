@@ -16,14 +16,37 @@ function FeedbackButtons({ onFeedback }) {
   );
 }
 
-function ChatWindow({ messages, streamingWords, onFeedback }) {
+function ProfessionalLoader() {
+  return (
+    <div className="message-item bot-item">
+      <div className="bubble-meta">
+        <span className="bubble-timestamp">{formatTime(Date.now())}</span>
+        <span className="ai-tag" title="AI generated content may be incorrect">AI generating</span>
+      </div>
+      <div className="chat-bubble bot loading">
+        <div className="bubble-content">
+          <div className="chat-loader">
+            <div className="loader-dots">
+              <div className="loader-dot"></div>
+              <div className="loader-dot"></div>
+              <div className="loader-dot"></div>
+            </div>
+            <div className="loader-text">AI is thinking...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ChatWindow({ messages, streamingWords, onFeedback, isLoading }) {
   const chatRef = useRef(null);
 
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [messages, streamingWords]);
+  }, [messages, streamingWords, isLoading]);
 
   return (
     <div className="chat-window" ref={chatRef}>
@@ -55,21 +78,35 @@ function ChatWindow({ messages, streamingWords, onFeedback }) {
             </div>
           </CSSTransition>
         ))}
+        
+        {/* Professional Loading Indicator */}
+        {isLoading && (
+          <CSSTransition key="loading" timeout={160} classNames="bubble-bot">
+            <ProfessionalLoader />
+          </CSSTransition>
+        )}
+        
         {/* Streaming bot message (word-by-word animation) */}
-        {Array.isArray(streamingWords) && streamingWords.length > 0 && (
-          <CSSTransition key="streaming" timeout={260} classNames="bubble-bot">
+        {Array.isArray(streamingWords) && streamingWords.length > 0 && !isLoading && (
+          <CSSTransition key="streaming" timeout={500} classNames="bubble-bot">
             <div className="message-item bot-item">
               <div className="bubble-meta">
                 <span className="bubble-timestamp">{formatTime(Date.now())}</span>
-                <span className="ai-tag" title="AI generated content may be incorrect">AI generated</span>
+                <span className="ai-tag" title="AI generated content may be incorrect">AI generating</span>
               </div>
               <div className="chat-bubble bot streaming">
                 <div className="bubble-content streaming-text">
                   {streamingWords.map((w, i) => (
-                    <span key={i} className="streaming-word" style={{
-                      opacity: 0,
-                      animation: `fade-in-word 0.33s ${i * 0.07}s forwards`
-                    }}>{w}</span>
+                    <span 
+                      key={i} 
+                      className="streaming-word"
+                      style={{
+                        opacity: 0,
+                        animation: `fade-in-word 0.4s ${i * 0.05}s cubic-bezier(0.4, 0, 0.2, 1) forwards`
+                      }}
+                    >
+                      {w}
+                    </span>
                   ))}
                   <span className="blinking-cursor" />
                 </div>
