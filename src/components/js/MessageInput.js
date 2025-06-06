@@ -1,16 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/MessageInput.css";
 
 function MessageInput({ onSendMessage, disabled = false }) {
   const [input, setInput] = useState("");
+  const [isReferencesOpen, setIsReferencesOpen] = useState(false);
+
+  // Check if references sidebar is open by monitoring body class
+  useEffect(() => {
+    const checkReferencesState = () => {
+      const hasReferencesClass = document.body.classList.contains('references-open');
+      setIsReferencesOpen(hasReferencesClass);
+    };
+
+    // Check initially
+    checkReferencesState();
+
+    // Set up a mutation observer to watch for class changes on body
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          checkReferencesState();
+        }
+      });
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const handleSend = () => {
     if (input.trim() && !disabled) {
       onSendMessage(input);
       setInput("");
+      // Reset textarea height to original size
+      const textarea = document.querySelector('.message-input');
+      if (textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = '2.1rem'; // Reset to minHeight
+      }
     }
   };
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey && !disabled) {
       e.preventDefault(); // Prevent default Enter behavior
@@ -29,7 +64,7 @@ function MessageInput({ onSendMessage, disabled = false }) {
   };
 
   return (
-    <div className="message-input-container">
+    <div className={`message-input-container${isReferencesOpen ? ' has-sidebar' : ''}`}>
       <div className={`message-input-bar ${disabled ? 'disabled' : ''}`}>
         <textarea
           className="message-input"

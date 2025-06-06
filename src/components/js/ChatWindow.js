@@ -75,6 +75,20 @@ function ReferencesSidebar({ isOpen, onClose }) {
     },
   ];
 
+  // Add body class when sidebar is open to shift the entire page
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('references-open');
+    } else {
+      document.body.classList.remove('references-open');
+    }
+    
+    // Cleanup when component unmounts
+    return () => {
+      document.body.classList.remove('references-open');
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
@@ -127,15 +141,23 @@ function ProfessionalLoader() {
   );
 }
 
-function ChatWindow({ messages, streamingWords, onFeedback, isLoading }) {
+function ChatWindow({ messages, streamingWords, onFeedback, isLoading, onNewChat }) {
   const chatRef = useRef(null);
   const [showReferences, setShowReferences] = useState(false);
 
+  // Scroll to bottom when messages change or when loading/streaming
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [messages, streamingWords, isLoading, showReferences]);
+  }, [messages, streamingWords, isLoading]);
+
+  // Scroll to top when new chat is started (messages array becomes empty)
+  useEffect(() => {
+    if (messages.length === 0 && chatRef.current) {
+      chatRef.current.scrollTop = 0;
+    }
+  }, [messages.length]);
 
   const handleShowReferences = () => {
     setShowReferences(true);
@@ -147,101 +169,95 @@ function ChatWindow({ messages, streamingWords, onFeedback, isLoading }) {
 
   return (
     <>
-      {/* 1) Wrap in a .chat-container to center the entire chat-window */}
-      <div className="chat-container">
-        {/* 2) Add “has-sidebar” class when references are open */}
-        <div
-          className={`chat-window${showReferences ? " has-sidebar" : ""}`}
-          ref={chatRef}
-        >
-          <TransitionGroup>
-            {messages.map((msg) => (
-              <CSSTransition
-                key={msg.id}
-                timeout={260}
-                classNames={msg.sender === "user" ? "bubble-user" : "bubble-bot"}
+      {/* Remove the chat-container wrapper and has-sidebar class logic */}
+      <div className="chat-window" ref={chatRef}>
+        <TransitionGroup>
+          {messages.map((msg) => (
+            <CSSTransition
+              key={msg.id}
+              timeout={260}
+              classNames={msg.sender === "user" ? "bubble-user" : "bubble-bot"}
+            >
+              <div
+                className={`message-item ${
+                  msg.sender === "user" ? "user-item" : "bot-item"
+                }`}
               >
-                <div
-                  className={`message-item ${
-                    msg.sender === "user" ? "user-item" : "bot-item"
-                  }`}
-                >
-                  <div className="bubble-meta">
-                    <span className="bubble-timestamp">
-                      {formatTime(msg.timestamp || msg.id)}
-                    </span>
-                    {msg.sender === "bot" && (
-                      <span
-                        className="ai-tag"
-                        title="AI generated content may be incorrect"
-                      >
-                        AI generated
-                      </span>
-                    )}
-                  </div>
-                  <div
-                    className={`chat-bubble ${
-                      msg.sender === "user" ? "user" : "bot"
-                    }`}
-                  >
-                    <div className="bubble-content">{msg.text}</div>
-                  </div>
+                <div className="bubble-meta">
+                  <span className="bubble-timestamp">
+                    {formatTime(msg.timestamp || msg.id)}
+                  </span>
                   {msg.sender === "bot" && (
-                    <div className="bubble-feedback-row">
-                      <FeedbackButtons
-                        onFeedback={(fb) => onFeedback && onFeedback(msg.id, fb)}
-                        onShowReferences={handleShowReferences}
-                      />
-                    </div>
+                    <span
+                      className="ai-tag"
+                      title="AI generated content may be incorrect"
+                    >
+                      AI generated
+                    </span>
                   )}
                 </div>
-              </CSSTransition>
-            ))}
+                <div
+                  className={`chat-bubble ${
+                    msg.sender === "user" ? "user" : "bot"
+                  }`}
+                >
+                  <div className="bubble-content">{msg.text}</div>
+                </div>
+                {msg.sender === "bot" && (
+                  <div className="bubble-feedback-row">
+                    <FeedbackButtons
+                      onFeedback={(fb) => onFeedback && onFeedback(msg.id, fb)}
+                      onShowReferences={handleShowReferences}
+                    />
+                  </div>
+                )}
+              </div>
+            </CSSTransition>
+          ))}
 
-            {isLoading && (
-              <CSSTransition key="loading" timeout={160} classNames="bubble-bot">
-                <ProfessionalLoader />
-              </CSSTransition>
-            )}
+          {isLoading && (
+            <CSSTransition key="loading" timeout={160} classNames="bubble-bot">
+              <ProfessionalLoader />
+            </CSSTransition>
+          )}
 
-            {Array.isArray(streamingWords) &&
-              streamingWords.length > 0 &&
-              !isLoading && (
-                <CSSTransition key="streaming" timeout={500} classNames="bubble-bot">
-                  <div className="message-item bot-item">
-                    <div className="bubble-meta">
-                      <span className="bubble-timestamp">
-                        {formatTime(Date.now())}
-                      </span>
-                      <span
-                        className="ai-tag"
-                        title="AI generated content may be incorrect"
-                      >
-                        AI generating
-                      </span>
-                    </div>
-                    <div className="chat-bubble bot streaming">
-                      <div className="bubble-content streaming-text">
-                        {streamingWords.map((w, i) => (
-                          <span
-                            key={i}
-                            className="streaming-word"
-                            style={{
-                              opacity: 0,
-                              animation: `fade-in-word 0.4s ${i * 0.05}s cubic-bezier(0.4, 0, 0.2, 1) forwards`,
-                            }}
-                          >
-                            {w}
-                          </span>
-                        ))}
-                        <span className="blinking-cursor" />
-                      </div>
+          {Array.isArray(streamingWords) &&
+            streamingWords.length > 0 &&
+            !isLoading && (
+              <CSSTransition key="streaming" timeout={500} classNames="bubble-bot">
+                <div className="message-item bot-item">
+                  <div className="bubble-meta">
+                    <span className="bubble-timestamp">
+                      {formatTime(Date.now())}
+                    </span>
+                    <span
+                      className="ai-tag"
+                      title="AI generated content may be incorrect"
+                    >
+                      AI generating
+                    </span>
+                  </div>
+                  <div className="chat-bubble bot streaming">
+                    <div className="bubble-content streaming-text">
+                      {streamingWords.map((w, i) => (
+                        <span
+                          key={i}
+                          className="streaming-word"
+                          style={{
+                            opacity: 0,
+                            animation: `fade-in-word 0.4s ${i * 0.05}s cubic-bezier(0.4, 0, 0.2, 1) forwards`,
+                          }}
+                        >
+                          {w}
+                        </span>
+                      ))}
+                      <span className="blinking-cursor" />
                     </div>
                   </div>
-                </CSSTransition>
-              )}
-          </TransitionGroup>
-        </div>
+                </div>
+              </CSSTransition>
+            )}
+        </TransitionGroup>
       </div>
 
       <ReferencesSidebar isOpen={showReferences} onClose={handleCloseReferences} />

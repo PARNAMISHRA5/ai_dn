@@ -20,7 +20,7 @@ function Header({ username, onNewSession, onGoHome }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  
   const handleLogoClick = () => {
     onGoHome?.();
   };
